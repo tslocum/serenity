@@ -54,6 +54,9 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
     if (sh > sw * 5) {
         sh = sw * 5;
     }
+    if (sh > h/2-vBorder-30) {
+        sh = h/2-vBorder-30;
+    }
     for (int i = 0;i < 13; i++) {
         if (i == 6) {
             painter.fill_rect(Gfx::Rect(hBorder+i*sw, vBorder, sw, h-vBorder*2), frameColor);
@@ -74,7 +77,7 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             Gfx::Path result_path;
             result_path.move_to({ hBorder+i*sw, vBorder });
             result_path.line_to({ hBorder+i*sw+sw, vBorder });
-            result_path.line_to({ hBorder+i*sw+sw/2, sh });
+            result_path.line_to({ hBorder+i*sw+sw/2, vBorder+sh });
             result_path.line_to({ hBorder+i*sw, vBorder });
             painter.fill_path(result_path, cTop, Gfx::Painter::WindingRule::Nonzero);
         }
@@ -82,7 +85,7 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             Gfx::Path result_path;
             result_path.move_to({ hBorder+i*sw, h-vBorder });
             result_path.line_to({ hBorder+i*sw+sw, h-vBorder });
-            result_path.line_to({ hBorder+i*sw+sw/2, h-sh });
+            result_path.line_to({ hBorder+i*sw+sw/2, h-vBorder-sh });
             result_path.line_to({ hBorder+i*sw, h-vBorder });
             painter.fill_path(result_path, cBottom, Gfx::Painter::WindingRule::Nonzero);
         }
