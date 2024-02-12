@@ -37,14 +37,57 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
 
     GUI::Painter painter(*this);
     painter.add_clip_rect(event.rect());
+
+    int w = width();
+    int h = height();
     
-    painter.fill_rect(frame_inner_rect(), Color::Black);
-    Gfx::Path result_path;
-    result_path.move_to({ 0, 0 });
-    result_path.line_to({ 10, 10 });
-    result_path.line_to({ 0, 20 });
-    result_path.line_to({ 0, 0 });
-    painter.fill_path(result_path, Color::White, Gfx::Painter::WindingRule::Nonzero);
+    Color borderColor = Color(0, 0, 0);
+    Color frameColor = Color(65, 40, 14);
+    Color faceColor = Color(120, 63, 25);
+    Color triangleA = Color(225, 188, 125);
+    Color triangleB = Color(120, 17, 0);
+
+    int hBorder = 10;
+    int vBorder = 20;
+
+    painter.fill_rect(frame_inner_rect(), frameColor);
+    painter.fill_rect(Gfx::Rect(hBorder, vBorder, w-hBorder*2, h-vBorder*2), faceColor);
+
+    int sw = (w-hBorder*2) / 14;
+    int sh = (h-vBorder*2) / 2;
+    for (int i = 0;i < 13; i++) {
+        if (i == 6) {
+            painter.fill_rect(Gfx::Rect(hBorder+i*sw, vBorder, sw, h-vBorder*2), frameColor);
+            Gfx::Path result_path;
+            result_path.move_to({ hBorder+i*sw+sw/2, 0 });
+            result_path.line_to({ hBorder+i*sw+sw/2, h });
+            painter.stroke_path(result_path, borderColor, 2);
+            continue;
+        }
+
+        Color cTop = triangleA;
+        Color cBottom = triangleB;
+        if ((i >= 6) != (i % 2 != 0)) {
+            cTop = triangleB;
+            cBottom = triangleA;
+        }
+        {
+            Gfx::Path result_path;
+            result_path.move_to({ hBorder+i*sw, vBorder });
+            result_path.line_to({ hBorder+i*sw+sw, vBorder });
+            result_path.line_to({ hBorder+i*sw+sw/2, sh });
+            result_path.line_to({ hBorder+i*sw, vBorder });
+            painter.fill_path(result_path, cTop, Gfx::Painter::WindingRule::Nonzero);
+        }
+        {
+            Gfx::Path result_path;
+            result_path.move_to({ hBorder+i*sw, h-vBorder });
+            result_path.line_to({ hBorder+i*sw+sw, h-vBorder });
+            result_path.line_to({ hBorder+i*sw+sw/2, sh });
+            result_path.line_to({ hBorder+i*sw, h-vBorder });
+            painter.fill_path(result_path, cBottom, Gfx::Painter::WindingRule::Nonzero);
+        }
+    }
 
     update();
 }
