@@ -7,8 +7,6 @@ serenity_component(
 set(SOURCES
     main.cpp
     BackgammonWidget.cpp
-    PromotionDialog.cpp
-    Engine.cpp
 )
 
 serenity_app(Backgammon ICON app-chess)
