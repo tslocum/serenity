@@ -29,10 +29,6 @@ ErrorOr<NonnullRefPtr<BackgammonWidget>> BackgammonWidget::try_create()
 
 void BackgammonWidget::paint_event(GUI::PaintEvent& event)
 {
-    //int const min_size = min(width(), height());
-    //int const widget_offset_x = (window()->width() - min_size) / 2;
-    //int const widget_offset_y = (window()->height() - min_size) / 2;
-
     GUI::Frame::paint_event(event);
 
     GUI::Painter painter(*this);
@@ -50,8 +46,8 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
     int hBorder = 10;
     int vBorder = 20;
 
-    painter.fill_rect(frame_inner_rect(), frameColor);
-    painter.fill_rect(Gfx::Rect(hBorder, vBorder, w-hBorder*2, h-vBorder*2), faceColor);
+    painter.fill_rect(rect(), frameColor);
+    painter.fill_rect(Gfx::Rect(hBorder, vBorder, w-hBorder, h-vBorder*2), faceColor);
 
     int sw = (w-hBorder*2) / 14;
     int sh = (h-vBorder*2) / 2;
@@ -88,7 +84,9 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             painter.fill_path(result_path, cBottom, Gfx::Painter::WindingRule::Nonzero);
         }
     }
-
+    int hx = hBorder+13*sw;
+    painter.fill_rect(Gfx::Rect(hx, vBorder, hBorder, h-vBorder*2), frameColor);
+            
     update();
 }
 
@@ -110,10 +108,6 @@ void BackgammonWidget::mouseup_event(GUI::MouseEvent& event)
 
 void BackgammonWidget::mousemove_event(GUI::MouseEvent& event)
 {
-    //int const min_size = min(width(), height());
-    //int const widget_offset_x = (window()->width() - min_size) / 2;
-    //int const widget_offset_y = (window()->height() - min_size) / 2;
-
     if (!frame_inner_rect().contains(event.position()))
         return;
 
