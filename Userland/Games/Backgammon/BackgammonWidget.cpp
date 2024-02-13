@@ -91,8 +91,15 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             painter.fill_path(result_path, cBottom, Gfx::Painter::WindingRule::Nonzero);
         }
 
-        painter.draw_text(Gfx::IntRect{hBorder+i*sw, 0, sw, vBorder}, MUST(String::formatted("{}", 13+i)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
-        painter.draw_text(Gfx::IntRect{hBorder+i*sw, h-vBorder, sw, vBorder}, MUST(String::formatted("{}", 12+i)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
+        int spaceTop = 13+i;
+        int spaceBottom = 12-i;
+        if (i >= 6) {
+            spaceTop--;
+            spaceBottom++;
+        }
+
+        painter.draw_text(Gfx::IntRect{hBorder+i*sw, 0, sw, vBorder}, MUST(String::formatted("{}", spaceTop)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
+        painter.draw_text(Gfx::IntRect{hBorder+i*sw, h-vBorder, sw, vBorder}, MUST(String::formatted("{}", spaceBottom)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
     }
     int hx = hBorder+13*sw;
     painter.fill_rect(Gfx::Rect(hx, vBorder, hBorder, h-vBorder*2), frameColor);

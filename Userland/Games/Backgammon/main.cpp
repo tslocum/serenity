@@ -30,7 +30,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     Config::pledge_domain("Games");
     Config::monitor_domain("Games");
 
-    TRY(Desktop::Launcher::add_allowed_handler_with_only_specific_urls("/bin/Help", { URL::create_with_file_scheme("/usr/share/man/man6/Chess.md") }));
+    TRY(Desktop::Launcher::add_allowed_handler_with_only_specific_urls("/bin/Help", { URL::create_with_file_scheme("/usr/share/man/man6/Backgammon.md") }));
     TRY(Desktop::Launcher::seal_allowlist());
 
     auto app_icon = TRY(GUI::Icon::try_create_default_icon("app-chess"sv));
@@ -72,7 +72,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     auto help_menu = window->add_menu("&Help"_string);
     help_menu->add_action(GUI::CommonActions::make_command_palette_action(window));
     help_menu->add_action(GUI::CommonActions::make_help_action([](auto&) {
-        Desktop::Launcher::open(URL::create_with_file_scheme("/usr/share/man/man6/Chess.md"), "/bin/Help");
+        Desktop::Launcher::open(URL::create_with_file_scheme("/usr/share/man/man6/Backgammon.md"), "/bin/Help");
     }));
     help_menu->add_action(GUI::CommonActions::make_about_action("Backgammon"_string, app_icon, window));
 
