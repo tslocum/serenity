@@ -97,8 +97,38 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
     int hx = hBorder+13*sw;
     painter.fill_rect(Gfx::Rect(hx, vBorder, hBorder, h-vBorder*2), frameColor);
 
+    for (int i = 0;i < 13; i++) {
+        if (i == 0) {
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, vBorder, 5, Color::Black, false);
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, h-vBorder, 5, Color::White, true);
+        } else if (i == 4) {
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, vBorder, 3, Color::White, false);
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, h-vBorder, 3, Color::Black, true);
+        } else if (i == 7) {
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, vBorder, 5, Color::White, false);
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, h-vBorder, 5, Color::Black, true);
+        } else if (i == 12) {
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, vBorder, 2, Color::Black, false);
+            BackgammonWidget::draw_checkers(painter, hBorder+i*sw, h-vBorder, 2, Color::White, true);
+        }
+    }
+
             
     update();
+}
+
+void BackgammonWidget::draw_checkers(GUI::Painter p, int x, int y, int count, Gfx::Color c, bool bottom)
+{
+    Gfx::AntiAliasingPainter painter { p };
+    int hBorder = 8;
+    int sw = (width()-hBorder*2) / 14;
+    for (int i = 0; i < count; i++) {
+        int cy = y+i*(sw-1);
+        if (bottom) {
+            cy = y-i*(sw-1)-(sw-1);
+        }
+        painter.fill_ellipse(Gfx::IntRect{x, cy, sw, sw-1}, c);
+    }
 }
 
 void BackgammonWidget::mousedown_event(GUI::MouseEvent& event)

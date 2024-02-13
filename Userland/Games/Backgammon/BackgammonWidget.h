@@ -29,6 +29,8 @@ public:
     virtual void mouseup_event(GUI::MouseEvent&) override;
     virtual void mousemove_event(GUI::MouseEvent&) override;
 
+    virtual void draw_checkers(GUI::Painter painter, int x, int y, int count, Gfx::Color c, bool bottom);
+
     void reset();
 
 private:
