@@ -96,6 +96,7 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
     }
     int hx = hBorder+13*sw;
     painter.fill_rect(Gfx::Rect(hx, vBorder, hBorder, h-vBorder*2), frameColor);
+    painter.fill_rect(Gfx::Rect(w-sw, vBorder, sw, h-vBorder*2), frameColor);
 
     for (int i = 0;i < 13; i++) {
         if (i == 0) {
