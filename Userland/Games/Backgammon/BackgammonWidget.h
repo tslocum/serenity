@@ -11,6 +11,7 @@
 #include <AK/NonnullRefPtr.h>
 #include <AK/Optional.h>
 #include <LibConfig/Listener.h>
+#include <LibCore/ElapsedTimer.h>
 #include <LibGUI/Frame.h>
 #include <LibGfx/Bitmap.h>
 
@@ -32,6 +33,8 @@ public:
     virtual void draw_checkers(GUI::Painter painter, int x, int y, int count, Gfx::Color c, bool bottom);
 
     void reset();
+
+    Core::ElapsedTimer fps_timer;
 
 private:
     enum class ClaimDrawBehavior {

@@ -11,6 +11,7 @@
 #include <LibCore/Account.h>
 #include <LibCore/DateTime.h>
 #include <LibCore/File.h>
+#include <LibCore/ElapsedTimer.h>
 #include <LibGUI/MessageBox.h>
 #include <LibGUI/Painter.h>
 #include <LibGfx/AntiAliasingPainter.h>
@@ -23,12 +24,17 @@
 ErrorOr<NonnullRefPtr<BackgammonWidget>> BackgammonWidget::try_create()
 {
     auto widget = TRY(AK::adopt_nonnull_ref_or_enomem(new (nothrow) BackgammonWidget));
-
+    widget->fps_timer = Core::ElapsedTimer::start_new();
     return widget;
 }
 
 void BackgammonWidget::paint_event(GUI::PaintEvent& event)
 {
+    auto elapsed = fps_timer.elapsed_milliseconds();
+    long int delay = 10000;
+    if (elapsed < delay) {
+        usleep(delay-elapsed);
+    }
     GUI::Frame::paint_event(event);
 
     GUI::Painter painter(*this);
@@ -120,9 +126,10 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             BackgammonWidget::draw_checkers(painter, hBorder+i*sw, h-vBorder, 2, Color::White, true);
         }
     }
-
             
     update();
+    fps_timer.reset();
+    fps_timer.start();
 }
 
 void BackgammonWidget::draw_checkers(GUI::Painter p, int x, int y, int count, Gfx::Color c, bool bottom)

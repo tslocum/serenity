@@ -37,6 +37,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
 
     auto window = GUI::Window::construct();
     auto widget = TRY(BackgammonWidget::try_create());
+    widget->fps_timer.start();
     window->set_main_widget(widget);
 
     TRY(Core::System::unveil("/etc/passwd", "r"));
