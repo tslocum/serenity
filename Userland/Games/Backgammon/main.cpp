@@ -33,7 +33,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     TRY(Desktop::Launcher::add_allowed_handler_with_only_specific_urls("/bin/Help", { URL::create_with_file_scheme("/usr/share/man/man6/Backgammon.md") }));
     TRY(Desktop::Launcher::seal_allowlist());
 
-    auto app_icon = TRY(GUI::Icon::try_create_default_icon("app-chess"sv));
+    auto app_icon = TRY(GUI::Icon::try_create_default_icon("app-backgammon"sv));
 
     auto window = GUI::Window::construct();
     auto widget = TRY(BackgammonWidget::try_create());

@@ -9,5 +9,5 @@ set(SOURCES
     BackgammonWidget.cpp
 )
 
-serenity_app(Backgammon ICON app-chess)
+serenity_app(Backgammon ICON app-backgammon)
 target_link_libraries(Backgammon PRIVATE LibConfig LibFileSystemAccessClient LibGfx LibGUI LibCore LibMain LibDesktop)
