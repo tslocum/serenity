@@ -42,9 +42,10 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
     Color faceColor = Color(120, 63, 25);
     Color triangleA = Color(225, 188, 125);
     Color triangleB = Color(120, 17, 0);
+    Color spaceLabelColor = Color(121, 96, 60);
 
-    int hBorder = 10;
-    int vBorder = 20;
+    int hBorder = 8;
+    int vBorder = 16;
 
     painter.fill_rect(rect(), frameColor);
     painter.fill_rect(Gfx::Rect(hBorder, vBorder, w-hBorder, h-vBorder*2), faceColor);
@@ -89,9 +90,13 @@ void BackgammonWidget::paint_event(GUI::PaintEvent& event)
             result_path.line_to({ hBorder+i*sw, h-vBorder });
             painter.fill_path(result_path, cBottom, Gfx::Painter::WindingRule::Nonzero);
         }
+
+        painter.draw_text(Gfx::IntRect{hBorder+i*sw, 0, sw, vBorder}, MUST(String::formatted("{}", 13+i)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
+        painter.draw_text(Gfx::IntRect{hBorder+i*sw, h-vBorder, sw, vBorder}, MUST(String::formatted("{}", 12+i)), Gfx::TextAlignment::Center, spaceLabelColor, Gfx::TextElision::None, Gfx::TextWrapping::DontWrap);
     }
     int hx = hBorder+13*sw;
     painter.fill_rect(Gfx::Rect(hx, vBorder, hBorder, h-vBorder*2), frameColor);
+
             
     update();
 }
