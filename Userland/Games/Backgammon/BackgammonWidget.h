@@ -21,7 +21,7 @@ class BackgammonWidget final
     C_OBJECT_ABSTRACT(BackgammonWidget);
 
 public:
-    static ErrorOr<NonnullRefPtr<BackgammonWidget>> try_create();
+    static BackgammonWidget* try_create();
 
     virtual ~BackgammonWidget() override = default;
 

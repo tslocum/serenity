@@ -12,6 +12,7 @@
 #include <LibFileSystemAccessClient/Client.h>
 #include <LibGUI/ActionGroup.h>
 #include <LibGUI/Application.h>
+#include <LibGUI/BoxLayout.h>
 #include <LibGUI/Clipboard.h>
 #include <LibGUI/Icon.h>
 #include <LibGUI/Menu.h>
@@ -36,9 +37,16 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     auto app_icon = TRY(GUI::Icon::try_create_default_icon("app-backgammon"sv));
 
     auto window = GUI::Window::construct();
-    auto widget = TRY(BackgammonWidget::try_create());
+
+    auto main_widget = window->set_main_widget<GUI::Widget>();
+    main_widget->set_layout<GUI::HorizontalBoxLayout>(4, 6);
+
+    //auto widget = TRY(AK::adopt_nonnull_ref_or_enomem(new (nothrow) BackgammonWidget));
+
+    auto widget = BackgammonWidget::try_create();
+    main_widget->add<GUI::Widget>(AK::adopt_nonnull_ref_or_enomem(widget));
+    widget->fps_timer = Core::ElapsedTimer::start_new();
     widget->fps_timer.start();
-    window->set_main_widget(widget);
 
     TRY(Core::System::unveil("/etc/passwd", "r"));
     TRY(Core::System::unveil("/res", "r"));
@@ -57,7 +65,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     auto game_menu = window->add_menu("&Game"_string);
 
     game_menu->add_action(GUI::Action::create("&New Game", { Mod_None, Key_F2 }, TRY(Gfx::Bitmap::load_from_file("/res/icons/16x16/reload.png"sv)), [&](auto&) {
-        widget->reset();
+        //widget->reset();
     }));
     game_menu->add_separator();
 
@@ -78,7 +86,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     help_menu->add_action(GUI::CommonActions::make_about_action("Backgammon"_string, app_icon, window));
 
     window->show();
-    widget->reset();
+    //widget->reset();
 
     return app->exec();
 }

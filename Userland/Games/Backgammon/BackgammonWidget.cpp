@@ -21,9 +21,9 @@
 #include <LibGfx/Path.h>
 #include <unistd.h>
 
-ErrorOr<NonnullRefPtr<BackgammonWidget>> BackgammonWidget::try_create()
+BackgammonWidget* BackgammonWidget::try_create()
 {
-    auto widget = TRY(AK::adopt_nonnull_ref_or_enomem(new (nothrow) BackgammonWidget));
+    auto widget = new (nothrow) BackgammonWidget;
     widget->fps_timer = Core::ElapsedTimer::start_new();
     return widget;
 }
